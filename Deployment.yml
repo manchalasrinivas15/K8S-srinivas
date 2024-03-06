@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: zomato
+  template:
+    metadata:
+      labels:
+        app: zomato
+    spec:
+      containers:
+        - name: cont1
+          image: nginx
+          ports:
+            -  containerPort: 80
+          volumeMounts:
+            - name: myvolume
+              mountPath: "env-values"
+              readOnly: true
+      volumes:
+        - name: myvolume
+          persistentVolumeClaim:
+            claimName: mypvc1     
+
